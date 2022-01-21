@@ -1,6 +1,12 @@
 <script>
   import { onMount } from "svelte";
   import Card from "./Card.svelte";
+  import {
+    formatBytes,
+    calculateTotalSize,
+    mappedProducts,
+    generateShellScript,
+  } from "./util";
 
   let bundles = [];
 
@@ -13,22 +19,32 @@
       ...Object.values(await response.json()).map((value) => value),
     ];
   });
+
+  let totalSize = 0;
+
+  $: totalSize = formatBytes(calculateTotalSize(mappedProducts(bundles)));
 </script>
 
 <main>
-  <h1>Humble Bundle Library with {bundles.length} bundles</h1>
+  <h1>
+    Humble Bundle Library with {bundles.length} bundles
+  </h1>
+  <p class="headline">
+    Total size of downloadable content is {totalSize}.
+  </p>
   <div class="bundles">
     {#each bundles as bundle}
       <Card {bundle} />
     {/each}
   </div>
+  <!-- 
+  <h2>Your download script</h2>
+  <pre>{generateShellScript(mappedProducts(bundles))}</pre> -->
 </main>
 
 <style>
   main {
     padding: 1em;
-    /* max-width: 240px; */
-    /* margin: 0 auto; */
   }
 
   h1 {
@@ -37,6 +53,17 @@
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
+    margin-bottom: 1rem;
+  }
+
+  .headline {
+    text-align: center;
+    color: #757575;
+  }
+
+  pre {
+    max-height: 500px;
+    overflow-x: auto;
   }
 
   @media (min-width: 640px) {
