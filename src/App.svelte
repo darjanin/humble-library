@@ -27,8 +27,8 @@
 <style>
   main {
     padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+    /* max-width: 240px; */
+    /* margin: 0 auto; */
   }
 
   h1 {
@@ -39,15 +39,6 @@
     font-weight: 100;
   }
 
-  .bundles {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr 1fr; */
-    /* gap: 1rem; */
-  }
-
   @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
   }
 </style>

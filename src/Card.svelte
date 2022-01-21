@@ -25,9 +25,8 @@
 </script>
 
 {#if bundle && bundle.subproducts.length > 0 && hasSomeDownload(bundle)}
-  <div>
+  <article>
     <h2>{bundle.product.human_name} ({bundle.subproducts.length})</h2>
-    <p />
     <ul>
       {#each bundle.subproducts as subproduct}
         {#if subproduct.downloads.length > 0 && !getPlatforms(subproduct).includes("asmjs")}
@@ -36,16 +35,17 @@
               {#if subproduct.icon}
                 <img src={subproduct.icon} alt="" />
               {:else}
-                <span>
-                  {subproduct.machine_name}
-                </span>
+                <span>⬇️</span>
               {/if}
             </a>
-            <p>
-              {#each getPlatforms(subproduct) as platform}
-                {icons[platform]}
-              {/each}
-            </p>
+            <div>
+              <h3>{subproduct.human_name}</h3>
+              <p>
+                {#each getPlatforms(subproduct) as platform}
+                  {icons[platform]}
+                {/each}
+              </p>
+            </div>
           </li>
         {/if}
       {/each}
@@ -54,11 +54,11 @@
     <!-- <pre>
       {JSON.stringify(bundle, null, 2)}
     </pre> -->
-  </div>
+  </article>
 {/if}
 
 <style>
-  div {
+  article {
     /* border: 1px solid #dadada; */
     /* border-radius: 0.25rem; */
     padding: 0.25rem;
@@ -84,12 +84,21 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    text-align: center;
+    /* text-align: center; */
   }
 
   li {
-    width: 100px;
-    height: 150px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+  }
+
+  div {
+    margin-left: 1rem;
+  }
+
+  h3 {
+    margin: 0;
   }
 
   span {
@@ -99,6 +108,6 @@
   }
 
   img {
-    width: 100%;
+    /* max-width: 100%; */
   }
 </style>
